@@ -103,13 +103,11 @@ class LogProcessor:
         if total_seconds == 0:
             return 0.0
 
-        # Scale to 24 hours if sample is shorter
-        if self.sample_duration_hours < 24:
-            scaling_factor = 24 / self.sample_duration_hours
-            scaled_events = self.total_events * scaling_factor
-            return scaled_events / (24 * 3600)
+        # Calculate raw EPS based on actual sample duration
+        eps = self.total_events / total_seconds
         
-        return self.total_events / total_seconds
+        # No need to scale EPS - it's already a rate
+        return eps
 
     def calculate_forwarded_eps(self) -> float:
         """Calculate average forwarded events per second."""
