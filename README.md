@@ -34,6 +34,22 @@ source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
+## Project Structure
+
+```
+PanLogs/
+├── config/                 # Configuration files
+│   ├── panorama/          # Panorama XML configurations
+│   └── firewalls/         # Individual firewall XML configurations
+├── data/
+│   ├── logs/
+│   │   ├── training/      # Logs used for training the AI model
+│   │   └── production/    # Production logs to analyze
+│   ├── models/            # Trained AI models
+│   └── state/            # Application state and caches
+└── src/                   # Source code
+```
+
 ## Usage
 
 1. Configure your settings in `config.py`:
@@ -42,9 +58,20 @@ pip install -r requirements.txt
    - Adjust SIEM forwarding thresholds
    - Set retention period for storage calculations
 
-2. Run the analyzer:
+2. Place your configuration files:
+   - Put Panorama running-config.xml files in `config/panorama/`
+   - Put individual firewall configs in `config/firewalls/`
+   - Place training logs in `data/logs/training/`
+   - Place production logs in `data/logs/production/`
+
+3. Run the analyzer:
 ```bash
 python main.py
+```
+
+Optionally, you can specify a different config directory:
+```bash
+python main.py --config-dir /path/to/config
 ```
 
 ## Configuration
